@@ -109,7 +109,6 @@
             direction: rtl; 
         }
 
-        /* ستايل الملاحظة - يظهر بتأثير ناعم */
         .hint-text {
             font-family: 'Cairo', sans-serif;
             font-size: 1.1rem;
@@ -132,7 +131,6 @@
             100% { transform: scale(1); opacity: 0.9; }
         }
 
-        /* ============================================== ستايل الكيكة */
         .cake-wrapper {
             position: relative;
             width: 200px;
@@ -212,7 +210,6 @@
             to { transform: translateY(0); }
         }
 
-        /* تعديل ظهور النصوص وإعادتها للساحة */
         .text {
             color: #8b6a60;
             text-align: center;
@@ -241,7 +238,6 @@
             margin: 5px 0 0 0;
         }
 
-        /* ============================================== ستايل الكروت */
         .extra-content {
             display: flex;
             flex-direction: column;
@@ -252,6 +248,8 @@
             padding: 10px 20px;
             box-sizing: border-box;
             opacity: 0;
+            position: relative;
+            z-index: 6; /* لضمان بقاء الكروت فوق البلالين */
         }
 
         .cake-wrapper.active ~ .extra-content {
@@ -345,6 +343,69 @@
         @keyframes fadeIn {
             to { opacity: 1; }
         }
+
+        /* --- أكواد الـ CSS الجديدة الخاصة بالبلالين --- */
+        .balloon-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            pointer-events: none;
+            z-index: 2; /* تكون خلف الكروت والكيكة وامام الخلفية الأساسية */
+            display: none;
+        }
+
+        .balloon {
+            position: absolute;
+            bottom: -150px;
+            width: 60px;
+            height: 75px;
+            border-radius: 50% 50% 50% 50% / 40% 40% 60% 60%;
+            animation: floatUp 10s linear infinite;
+            opacity: 0.85;
+        }
+
+        /* حبل البالون الصغير من تحت */
+        .balloon:before {
+            content: "";
+            position: absolute;
+            bottom: -8px;
+            left: 28px;
+            width: 4px;
+            height: 12px;
+            background: rgba(0, 0, 0, 0.15);
+            border-radius: 3px;
+        }
+
+        /* خيط البالون الطويل المتعرج */
+        .balloon:after {
+            content: "";
+            position: absolute;
+            bottom: -45px;
+            left: 29px;
+            width: 2px;
+            height: 40px;
+            background: rgba(0, 0, 0, 0.1);
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.85;
+            }
+            90% {
+                opacity: 0.85;
+            }
+            100% {
+                transform: translateY(-120vh) rotate(15deg);
+                opacity: 0;
+            }
+        }
     </style>
 </head>
 <body>
@@ -370,6 +431,8 @@
     </div>
 
     <div id="page3" class="page">
+        <div id="balloonContainer" class="balloon-container"></div>
+
         <div id="cakeWrapper" class="cake-wrapper">
             <div class="candle-container">
                 <div class="fuego"></div>
@@ -436,7 +499,6 @@
             <p class="name">BishBish</p>
         </div>
 
-        <!-- الملاحظة بتصميم مرتب بعد النص -->
         <div class="hint-text">
 عشان تكوني بالصورة يعني , في حكي ورا الصور والفيديو , اذا حابة تشوفي اكبسي عليهم !
         </div>
@@ -460,7 +522,7 @@
                         <video src="video.mp4" autoplay loop muted playsinline></video>
                     </div>
                     <div class="card-back">
-                        <p class="card-text">ممكن ما اكون بعرف اعبر عن مشاعري كثير , بس ابتسامته بالفيديو لحالها بتوضح على كمية السعادة يلي بداخلي لما اشوف بشبش , ممكن ما صار النا زمان بنعرف بعض , بس سدقيني انتي اخذتي محل ناس الهم سنين بحياتي , انتي مش مجرد بني ادمة عابرة بحياتي او معرفة جيدة , انت بشبش !!! , انتي احسن بني ادمة بحياتي ,  بتمنى لو اكون عرفتك من زمان كثير , بس مش مشكلة اكيد ربنا اله رساله بمعرفتنا المتاخرة والحلوة هاي , وبتمنى انه زي ما وجودك بحياتي اشي كثير حلو , يكون وجودي بحياتك على الاقل اله بصمة حلوة ولو كانت صغيرة ومش كافيه بالقدر يلي انا بقدرك وبعزك فيه  </p>
+                        <p class="card-text">مقبل ما اكون بعرف اعبر عن مشاعري كثير , بس ابتسامته بالفيديو لحالها بتوضح على كمية السعادة يلي بداخلي لما اشوف بشبش , ممكن ما صار النا زمان بنعرف بعض , بس سدقيني انتي اخذتي محل ناس الهم سنين بحياتي , انتي مش مجرد بني ادمة عابرة بحياتي او معرفة جيدة , انت بشبش !!! , انتي احسن بني ادمة بحياتي ,  بتمنى لو اكون عرفتك من زمان كثير , بس مش مشكلة اكيد ربنا اله رساله بمعرفتنا المتاخرة والحلوة هاي , وبتمنى انه زي ما وجودك بحياتي اشي كثير حلو , يكون وجودي بحياتك على الاقل اله بصمة حلوة ولو كانت صغيرة ومش كافيه بالقدر يلي انا بقدرك وبعزك فيه  </p>
                     </div>
                 </div>
             </div>
@@ -522,10 +584,48 @@
             if (firstAnimation && typeof firstAnimation.beginElement === 'function') {
                 firstAnimation.beginElement();
             }
+
+            /* --- كود تشغيل البلالين الجديدة عند فتح الصفحة 3 --- */
+            startBalloons();
         }
 
         function toggleFlip(card) {
             card.classList.toggle('flipped');
+        }
+
+        /* --- دالة توليد البلالين المتحركة بشكل عشوائي --- */
+        function startBalloons() {
+            const container = document.getElementById('balloonContainer');
+            container.style.display = 'block';
+
+            // مصفوفة ألوان البلالين (ألوان باستيل ناعمة متناسقة مع ثيم الموقع)
+            const colors = ['#ffb7b2', '#ffdac1', '#e2f0cb', '#b5ead7', '#c7ceea', '#ff9aa2', '#ffb3ba'];
+
+            // توليد بالون جديد كل 500 ملي ثانية (نصف ثانية)
+            setInterval(() => {
+                const balloon = document.createElement('div');
+                balloon.classList.add('balloon');
+
+                // إعدادات عشوائية لكل بالون عشان يطلع الحركات طبيعية ومتناسقة
+                const randomColor = colors[Math.floor(Math.random() * colors.length)];
+                const randomLeft = Math.random() * 100; // مكان الظهور الأفقي من 0 لـ 100%
+                const randomSize = 45 + Math.random() * 30; // الحجم يتراوح بين 45px و 75px
+                const randomDuration = 7 + Math.random() * 6; // سرعة الطيران بين 7 و 13 ثانية
+
+                balloon.style.backgroundColor = randomColor;
+                balloon.style.left = randomLeft + '%';
+                balloon.style.width = randomSize + 'px';
+                balloon.style.height = (randomSize * 1.25) + 'px'; // المحافظة على النسبة البيضاوية
+                balloon.style.animationDuration = randomDuration + 's';
+
+                container.appendChild(balloon);
+
+                // حذف البالون من الكود بعد ما يخلص أنيميشن ويطلع من الشاشة عشان ما يثقل المتصفح
+                setTimeout(() => {
+                    balloon.remove();
+                }, randomDuration * 1000);
+
+            }, 500);
         }
     </script>
 
